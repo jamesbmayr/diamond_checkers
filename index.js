@@ -8,7 +8,7 @@
 	const port = 3000;
 	const server = http.createServer(requestHandler);
 
-	server.listen(port, function (error) {
+	server.listen(process.env.PORT || 3000, function (error) {
 		if (error) {
 			console.log("server error: " + error);
 		}
