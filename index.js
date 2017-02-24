@@ -93,7 +93,7 @@
 						}
 					break;
 
-					case (/^\/game\/[A-Za-z0-9]{16}\/(1|2)$/).test(request.url): //games pages
+					case (/^\/game\/[A-Za-z0-9]{16}\/(0|1|2)$/).test(request.url): //games pages
 						var game_id = String(request.url).substring(request.url.indexOf("/game/") + 6).split("/")[0];
 						processes.retrieve("games", {id: game_id}, then);
 						function then(data) {

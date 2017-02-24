@@ -1,86 +1,129 @@
-/* page */
-	body {
-		background-color: green;
-	}
+/*** all pages ***/
+	/* page */
+		body {
+			background-color: green;
+		}
 
-	#current_turn {
-		display: none;
-	}
+	/* sections */
+		#header {
 
-/* game board */
-	#board {
-		position: absolute;
-		top: 25%;
-		left: 15%;
-		height: 500px;
-		width: 500px;
-		border: 5px solid #333333;
-		transform: rotate(45deg);
-	}
+		}
 
-	.row {
-		float: left;
-		width: 100%;
-		height: 20%;
-	}
+		#container {
 
-	.square {
-		float: left;
-		width: calc(20% - 10px);
-		height: calc(100% - 10px);
-	}
+		}
 
-	.square[color=white] {
-		background-color: #eeeeee;
-		border: 5px solid #eeeeee;
-	}
+		#message {
 
-	.square[color=black] {
-		background-color: #333333;
-		border: 5px solid #333333;
-	}
+		}
 
-	.piece {
-		position: relative;
-		border-radius: 100%;
-		height: 50%;
-		width: 50%;
-		top: 50%;
-		left: 50%;
-		transform: translateX(-50%) translateY(-50%);
-	}
+		#footer {
 
-	.piece[player=player_1] {
-		background-color: lightblue;
-	}
+		}
 
-	.piece[player=player_2] {
-		background-color: pink;
-	}
+/*** index.html ***/
+	/* form */
+		#game_form {
 
-/* gameplay */
-	.selectable {
-		cursor: pointer;
-	}
+		}
 
-	.unselectable {
-		cursor: not-allowed;
-	}
+		#new_player {
 
-	.selected[player=player_1] {
-		border: 5px solid blue;
-	}
+		}
 
-	.selected[player=player_2] {
-		border: 5px solid red;
-	}
+		#join_id {
 
-	.legal[color=white] {
-		border: 5px solid black;
-		cursor: pointer;
-	}
+		}
 
-	.legal[color=black] {
-		border: 5px solid black;
-		cursor: pointer;
-	}
+		button#start {
+
+		}
+
+		button#join {
+			
+		}
+
+/*** game.html ***/
+	/* data */
+		#current_turn {
+			display: none;
+		}
+
+	/* game board */
+		#board {
+			position: absolute;
+			top: 25%;
+			left: 15%;
+			height: 500px;
+			width: 500px;
+			border: 5px solid #333333;
+			transform: rotate(45deg);
+		}
+
+		.row {
+			float: left;
+			width: 100%;
+			height: 20%;
+		}
+
+		.square {
+			float: left;
+			width: calc(20% - 10px);
+			height: calc(100% - 10px);
+		}
+
+		.square[color=white] {
+			background-color: #eeeeee;
+			border: 5px solid #eeeeee;
+		}
+
+		.square[color=black] {
+			background-color: #333333;
+			border: 5px solid #333333;
+		}
+
+	/* pieces */
+		.piece {
+			position: relative;
+			border-radius: 100%;
+			height: 50%;
+			width: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
+
+		.piece[player=player_1] {
+			background-color: lightblue;
+		}
+
+		.piece[player=player_2] {
+			background-color: pink;
+		}
+
+	/* states */
+		.selectable {
+			cursor: pointer;
+		}
+
+		.unselectable {
+			cursor: not-allowed;
+		}
+
+		.selected[player=player_1] {
+			border: 5px solid blue;
+		}
+
+		.selected[player=player_2] {
+			border: 5px solid red;
+		}
+
+		.legal[color=white] {
+			border: 5px solid black;
+			cursor: pointer;
+		}
+
+		.legal[color=black] {
+			border: 5px solid black;
+			cursor: pointer;
+		}
