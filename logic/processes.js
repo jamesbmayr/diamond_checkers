@@ -1,7 +1,13 @@
 /* dependencies */
 	const fs = require("fs");
 	const mongo = require("mongodb").MongoClient;
-	const database = "mongodb://localhost:27017/diamond_checkers";
+	var database;
+	try {
+		database = "mongodb://localhost:27017/diamond_checkers";
+	}
+	catch (error) {
+		database = "mongodb://" + process.env.MLABS_USERNAME + ":" + process.env.MLABS_PASSWORD + "@" + process.env.MLABS_URL;
+	}
 	const game = require("./game");
 
 /* render html */
