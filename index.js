@@ -29,15 +29,15 @@
 			}
 
 			var body = "";
-			request.on("data", function (data) {
+			request.on("data", function (data) { //build the post data...
 				body += data;
 			});
 
 			request.on("end", function () {
-				var post = qs.parse(body) || null;
+				var post = qs.parse(body) || null; //...then parse it
 
 				switch (true) {
-					case (/\/stylesheet.css/).test(request.url):
+					case (/\/stylesheet.css/).test(request.url): //master stylesheet
 						fs.readFile(__dirname + "/assets/stylesheet.css", function (error, css) {
 							if (error) {
 								console.log(error);
@@ -49,7 +49,7 @@
 						});
 					break;
 
-					case (/\/script.js/).test(request.url):
+					case (/\/script.js/).test(request.url): //front-end javascript
 						fs.readFile(__dirname + "/assets/script.js", function (error, js) {
 							if (error) {
 								console.log(error);
@@ -61,7 +61,7 @@
 						});
 					break;
 
-					case (/^\/$/).test(request.url):
+					case (/^\/$/).test(request.url): //index page
 						if ((typeof post.start !== "undefined") && (post.name.length > 0)) {
 							var data = game.newGame(post.name);
 							processes.store("games", null, data, then);
@@ -93,7 +93,7 @@
 						}
 					break;
 
-					case (/^\/game\/[A-Za-z0-9]{16}\/(1|2)$/).test(request.url):
+					case (/^\/game\/[A-Za-z0-9]{16}\/(1|2)$/).test(request.url): //games pages
 						var game_id = String(request.url).substring(request.url.indexOf("/game/") + 6).split("/")[0];
 						processes.retrieve("games", {id: game_id}, then);
 						function then(data) {
@@ -103,7 +103,7 @@
 						}
 					break;
 
-					case (/\/ajax\/game$/).test(request.url) && (request.method === "POST"):
+					case (/\/ajax\/game$/).test(request.url) && (request.method === "POST"): //ajax requests
 						processes.retrieve("games", {id: post.game_id}, then_1);
 						function then_1(data) {
 							if (typeof post.player !== "undefined") {
@@ -120,7 +120,7 @@
 						}
 					break;
 
-					default:
+					default: //all others --> 404
 						response.writeHead(404, {"Content-Type": "text/plain"});
 						response.end("404: File not found.");
 					break;
