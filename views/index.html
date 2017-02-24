@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>new game</title>
+		<!--<link rel="shortcut icon" href="#"/>-->
+		<!--<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold;italic;bolditalic"/>-->
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+	</head>
+	<body>
+		<div id="title">launch a new game?</div>
+		<div id="date"><% new Date(); %></div>
+		<br>
+		<div id="message"><% data.message %></div>
+		<hr>
+		<form method="post" action="">
+			<input type="text" name="name" placeholder="your name"/>
+			<br>
+			<br>
+			<button type="submit" name="start">start</button>
+			 or 
+			<input type="text" name="game_id" placeholder="game_id"/>
+			<button type="submit" name="join">join</button>
+		</form>
+	</body>
+</html>

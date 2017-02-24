@@ -1,0 +1,16 @@
+{
+  "name": "diamond_checkers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "start": "node index.js",
+    "mongo": "mongod --dbpath=data/db --port 27017"
+  },
+  "author": "James Mayr",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^2.2.24"
+  }
+}
