@@ -8,11 +8,11 @@ $(document).ready(function () {
 		else {
 			var opponent = 0;
 		}
-		var turn = Number($("#board").attr("turn"));
 		
 		$(".piece[player=player_" + player + "]").addClass("selectable");
 
 		var loop = setInterval(function() {
+			var turn = Number($("#board").attr("turn"));
 			retrieveBoard();
 		}, 5000);
 
@@ -106,7 +106,8 @@ $(document).ready(function () {
 
 					$("#message").text(data.message["player_" + player] || "");
 					$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
-
+					turn = Number($("#board").attr("turn"));
+					
 					if (data.selected["player_" + player] !== null) {
 						$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
 
@@ -134,7 +135,8 @@ $(document).ready(function () {
 						}
 						
 						$("#message").text(data.message["player_" + player] || "");
-						$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));;
+						$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
+						turn = Number($("#board").attr("turn"));
 
 						if (data.selected["player_" + player] !== null) {
 							$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
