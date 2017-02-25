@@ -1,0 +1,160 @@
+/* colors */
+	:root {
+		--white:#eeeeee;
+		--black:#333333;
+		--blue:#0099ff;
+		--red:#ff5050;
+		--dark-blue:#004d80;
+		--dark-red:#660000;
+	}
+
+/* page */
+	body {
+		background-color: #222222;
+		font-size: 25px;
+		font-family: arial, sans-serif;
+		font-weight: bold;
+		color: var(--white);
+	}
+
+/* form */
+	#game_form {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		height: 500px;
+		width: 500px;
+		border: 10px solid var(--black);
+		transform: translateX(-50%) translateY(-50%) rotate(45deg);
+		border-radius: 10px;
+		background-color: var(--black);
+		box-shadow: 0px 0px 30px var(--white);
+	}
+
+	#game_form_inner {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		height: 100%;
+		transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+		font-size: 25px;
+		text-align: center;
+	}
+
+	#game_form_message {
+
+	}
+
+	#title {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 150%;
+		transform: translateX(-50%) translateY(-50%);
+		font-size: 50px;
+	}
+
+	#title_spacer {
+		display: inline-block;
+		height: 0px;
+		width: 150px;
+		background-color: black;
+	}
+
+/* buttons */
+	#join {
+		position: absolute;
+		top: 20%;
+		left: 50%;
+		cursor: pointer;
+		height: 200px;
+		width: 200px;
+		background-color: var(--red);
+		color: var(--dark-red);
+		border-radius: 10px;
+		border: 0px;
+		padding: 0px;
+		transform: translateX(-50%) translateY(-50%) rotate(45deg);
+		box-shadow: 0px 0px 20px var(--red);
+	}
+
+	#join:hover {
+		color: var(--red);
+		background-color: var(--dark-red);
+	}
+
+	#join_inner {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+		font-size: 50px;
+		font-family: arial, sans-serif;
+		font-weight: bold;
+	}
+
+	#start {
+		position: absolute;
+		top: 80%;
+		left: 50%;
+		cursor: pointer;
+		height: 200px;
+		width: 200px;
+		background-color: var(--blue);
+		color: var(--dark-blue);
+		border-radius: 10px;
+		border: 0px;
+		padding: 0px;
+		transform: translateX(-50%) translateY(-50%) rotate(45deg);
+		box-shadow: 0px 0px 20px var(--blue);
+	}
+
+	#start:hover {
+		color: var(--blue);
+		background-color: var(--dark-blue);
+	}
+
+	#start_inner {
+		position: relative;
+		margin-top: 30%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+		font-size: 50px;
+		font-family: arial, sans-serif;
+		font-weight: bold;
+	}
+
+/* inputs */
+	#join_2 {
+		display: none;
+		position: absolute;
+		top: 20%;
+		left: 50%;
+		height: 200px;
+		width: 200px;
+		background-color: var(--red);
+		color: var(--dark-red);
+		border-radius: 10px;
+		border: 0px;
+		padding: 0px;
+		transform: translateX(-50%) translateY(-50%) rotate(45deg);
+		box-shadow: 0px 0px 20px var(--red);
+	}
+
+	#game_id {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+		font-size: 20px;
+		font-family: arial, sans-serif;
+		font-weight: bold;
+		height: 50px;
+		width: 200px;
+		border: 0;
+		border-radius: 10px;
+		outline: none;
+		text-align: center;
+		color: var(--dark-red);
+	}
