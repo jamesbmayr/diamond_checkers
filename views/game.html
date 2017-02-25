@@ -2,20 +2,13 @@
 	<head>
 		<title>game <% data.id %></title>
 		<!--<link rel="shortcut icon" href="#"/>-->
-		<!--<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>-->
-		<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold;italic;bolditalic"/>-->
-		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<link type="text/css" rel="stylesheet" href="game_stylesheet.css"/>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="game_script.js"></script>
 		<script>window.turn = <% data.state.turn %>;</script>
 	</head>
 	<body>
-		<div id="game_id">game: <% data.id %></div>
-		<div id="date_range">from <% new Date(data.state.time_start); %> to <% new Date(); %></div>
-		<div id="round">round: <% data.state.round %></div>
-		<div id="turn">whose turn: <% data.state.turn %></div>
-		<hr>
 		<div id="message"><% data.message["player_" + data.viewer] %></div>
-		<div id="board"><% game.drawBoard(data) %></div>
+		<div id="board" game-id="<% data.id %>" turn="<% data.state.turn %>" round="<% data.state.round %>" player="<% data.viewer %>"><% game.drawBoard(data) %></div>
 	</body>
 </html>

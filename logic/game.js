@@ -13,6 +13,10 @@
 				state: {
 					time_start: new Date().getTime(),
 					last_play: null,
+					last_piece: {
+						x: null,
+						y: null
+					},
 					playing: false,
 					round: 0,
 					turn: 0,
@@ -50,6 +54,15 @@
 					}
 					else {
 						var player = 0;
+					}
+
+					if ((x + y) === 0) {
+						var player = 0;
+						var color = "blue";
+					}
+					if ((x + y) === 8) {
+						var player = 0;
+						var color = "red";
 					}
 
 					data.board[x + "," + y] = {
@@ -97,7 +110,13 @@
 			
 			for (var x = 0; x < 5; x++) {
 				if (data.board[x + "," + y].player > 0) {
-					var piece = "<div class='piece' player='player_" + data.board[x + "," + y].player + "'></div>";
+					if ((data.state.last_piece.x === x) && (data.state.last_piece.y === y)) {
+						var last = " last";
+					}
+					else {
+						var last = "";
+					}
+					var piece = "<div class='piece" + last + "' player='player_" + data.board[x + "," + y].player + "'></div>";
 				}
 				else {
 					var piece = "";
@@ -118,9 +137,7 @@
 /* makeMove */
 	function makeMove(data, actor, piece, target) {
 		var player = Number(data.state.turn);
-		console.log("player: " + player);
 		var opponent = (player % 2) + 1;
-		console.log("opponent: " + opponent);
 		
 		if (Number(actor) !== player) { //not your turn
 			data.message["player_" + actor] = "illegal move: not your turn";
@@ -134,6 +151,10 @@
 			data.message["player_" + actor] = "illegal move: occupied square";
 			return data;
 		}
+		else if (((Number(target.x) === 0) && (Number(target.y) === 0) && (player === 1)) || ((Number(target.x) === 4) && (Number(target.y) === 4) && (player === 2))) { //home square
+			data.message["player_" + actor] = "illegal move: can't go into home square";
+			return data;
+		}
 		else {
 			var jumps = findJumps(data, player, findPieces(data, player));
 
@@ -144,7 +165,7 @@
 				case ((Number(target.x) === Number(piece.x)) && (Number(target.y) === Number(piece.y) + 1)):
 				case ((Number(target.x) === Number(piece.x)) && (Number(target.y) === Number(piece.y) - 1)):
 					if (jumps.length) {
-						data.message["player_" + actor] = "illegal move: must make a jump";
+						data.message["player_" + actor] = "illegal move: jumps available to make";
 						return data;
 					}
 					else {
@@ -152,19 +173,19 @@
 						data.board[target.x + "," + target.y].player = player;
 						data.state.last_play = new Date().getTime();
 						data.state.turn = opponent;
+						data.state.last_piece = {
+							x: target.x,
+							y: target.y
+						}
 						data.selected["player_" + player] = null;
 						data.jumps["player_" + player] = null;
 						if (data.state.turn === 1) {
 							data.state.round++;
 						}
 
-						console.log("turn: " + data.state.turn);
-						
 						data.message["player_" + actor] = "piece moved to adjacent square - waiting...";
 						data.message["player_" + opponent] = "your turn!";
 						data = checkEnd(data);
-
-						console.log("turn: " + data.state.turn);
 						return data;
 					}
 				break;
@@ -193,7 +214,7 @@
 							data.selected["player_" + player] = {
 								x: target.x,
 								y: target.y
-							}
+							};
 							data.jumps["player_" + player] = jumps;
 							data.message["player_" + actor] = "piece jumped over opponent - keep jumping";
 							data.message["player_" + opponent] = "opponent is jump-chaining - waiting...";
@@ -201,6 +222,10 @@
 						else {
 							data.state.last_play = new Date().getTime();
 							data.state.turn = opponent;
+							data.state.last_piece = {
+								x: target.x,
+								y: target.y
+							}
 							data.selected["player_" + player] = null;
 							data.jumps["player_" + player] = null;
 							if (data.state.turn === 1) {
