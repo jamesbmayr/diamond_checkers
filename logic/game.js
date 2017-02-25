@@ -83,11 +83,17 @@
 
 /* joinGame */
 	function joinGame(data, player_2) {
-		if (data.players.player_2 !== null) {
+		if ((typeof data === "undefined") || (data === null)) {
+			data = {
+				id: false,
+				message: "can't find that game!"
+			}
+		}
+		else if (data.players.player_2 !== null) {
 			data = {};
 			data = {
 				id: false,
-				message: "can't join this game"
+				message: "can't join this game - already has 2 players"
 			}
 		}
 		else {
