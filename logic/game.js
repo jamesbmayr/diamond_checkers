@@ -269,7 +269,10 @@
 			];
 
 			for (j = 0; j < targets.length; j++) {
-				if ((Number(targets[j].x) > -1) && (Number(targets[j].y) > -1) && (Number(targets[j].x) < 5) && (Number(targets[j].y) < 5)) {
+				if (((Number(targets[j].x) === 0) && (Number(targets[j].y) === 0) && (Number(player) === 1)) || ((Number(targets[j].x) === 4) && (Number(targets[j].y) === 4) && (Number(player) === 2))) {
+					//home square
+				}
+				else if ((Number(targets[j].x) > -1) && (Number(targets[j].y) > -1) && (Number(targets[j].x) < 5) && (Number(targets[j].y) < 5)) {
 					var between = {
 						x: ((Number(targets[j].x) + Number(pieces[i].x)) / 2),
 						y: ((Number(targets[j].y) + Number(pieces[i].y)) / 2)

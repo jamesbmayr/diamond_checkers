@@ -64,6 +64,10 @@
 		width: 150%;
 		transform: translateX(-50%) translateY(-50%);
 		font-size: 7vh;
+		cursor: default;
+		user-select: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
 	}
 
 	#title_spacer {
