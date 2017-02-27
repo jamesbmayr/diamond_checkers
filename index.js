@@ -38,7 +38,19 @@
 				var routes = String(request.url).split("/");
 
 				switch (true) {
-					case (/\/index_stylesheet.css/).test(request.url): //index stylesheet
+					case (/\/icon.png$/).test(request.url): //icon
+						fs.readFile(__dirname + "/assets/icon.png", function (error, image) {
+							if (error) {
+								console.log(error);
+							}
+							else {
+								response.writeHead(200, {"Content-Type": "image/png"});
+								response.end(image);
+							}
+						});
+					break;
+
+					case (/\/index_stylesheet.css$/).test(request.url): //index stylesheet
 						fs.readFile(__dirname + "/assets/index_stylesheet.css", function (error, css) {
 							if (error) {
 								console.log(error);
@@ -50,7 +62,7 @@
 						});
 					break;
 
-					case (/\/game_stylesheet.css/).test(request.url): //game stylesheet
+					case (/\/game_stylesheet.css$/).test(request.url): //game stylesheet
 						fs.readFile(__dirname + "/assets/game_stylesheet.css", function (error, css) {
 							if (error) {
 								console.log(error);
@@ -62,7 +74,7 @@
 						});
 					break;
 
-					case (/\/index_script.js/).test(request.url): //index front-end javascript
+					case (/\/index_script.js$/).test(request.url): //index front-end javascript
 						fs.readFile(__dirname + "/assets/index_script.js", function (error, js) {
 							if (error) {
 								console.log(error);
@@ -74,7 +86,7 @@
 						});
 					break;
 
-					case (/\/game_script.js/).test(request.url): //game front-end javascript
+					case (/\/game_script.js$/).test(request.url): //game front-end javascript
 						fs.readFile(__dirname + "/assets/game_script.js", function (error, js) {
 							if (error) {
 								console.log(error);

@@ -10,6 +10,7 @@ $(document).ready(function () {
 		}
 		
 		$(".piece[player=player_" + player + "]").addClass("selectable");
+		$("#newgame_id").text(" " + game_id);
 
 		var loop = setInterval(function() {
 			var turn = Number($("#board").attr("turn"));
@@ -104,7 +105,7 @@ $(document).ready(function () {
 						clearInterval(loop);
 					}
 
-					$("#message").text(data.message["player_" + player] || "");
+					$("#message").html(data.message["player_" + player] || "");
 					$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
 					turn = Number($("#board").attr("turn"));
 					
@@ -134,11 +135,11 @@ $(document).ready(function () {
 							clearInterval(loop);
 						}
 						
-						$("#message").text(data.message["player_" + player] || "");
+						$("#message").html(data.message["player_" + player] || "");
 						$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
 						turn = Number($("#board").attr("turn"));
 
-						if (data.selected["player_" + player] !== null) {
+						if ((typeof data.selected["player_" + player] !== "undefined") && (data.selected["player_" + player] !== null)) {
 							$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
 
 							for (i = 0; i < data.jumps["player_" + player].length; i++) {

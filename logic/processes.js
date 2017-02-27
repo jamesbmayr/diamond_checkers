@@ -26,7 +26,7 @@
 				}
 				catch (error) {
 					html.temp = "";
-					console.log(error);
+					console.log(error.name);
 				}
 				//console.log("now: " + html.temp);
 				html.array[html.count] = html.temp;

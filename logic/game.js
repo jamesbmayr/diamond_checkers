@@ -22,8 +22,8 @@
 					turn: 0,
 				},
 				message: {
-					player_1: "waiting for player 2 to join...",
-					player_2: "waiting for you to exist..."
+					player_1: "waiting for player 2 to join <div id='newgame_id'></div>",
+					player_2: "waiting for you to exist - join <div id='newgame_id'></div>"
 				},
 				selected: {
 					player_1: null,
@@ -322,8 +322,8 @@
 			data.selected.player_2 = null;
 			data.jumps.player_1 = null;
 			data.jumps.player_2 = null;
-			data.message.player_1 = "you lose!";
-			data.message.player_2 = "you win!";
+			data.message.player_1 = "you lose! <a id='again' href='../../'>play again?</a>";
+			data.message.player_2 = "you win! <a id='again' href='../../'>play again?</a>";
 		}
 		else if (!findPieces(data,2).length) {
 			data.state.playing = false;
@@ -334,8 +334,8 @@
 			data.selected.player_2 = null;
 			data.jumps.player_1 = null;
 			data.jumps.player_2 = null;
-			data.message.player_2 = "you lose!";
-			data.message.player_1 = "you win!";
+			data.message.player_1 = "you win! <a id='again' href='../../'>play again?</a>";
+			data.message.player_2 = "you lose! <a id='again' href='../../'>play again?</a>";
 		}
 		else if (data.board["0,0"].player === 2) {
 			data.state.playing = false;
@@ -346,8 +346,8 @@
 			data.selected.player_2 = null;
 			data.jumps.player_1 = null;
 			data.jumps.player_2 = null;
-			data.message.player_1 = "you lose!";
-			data.message.player_2 = "you win!";
+			data.message.player_1 = "you lose! <a id='again' href='../../'>play again?</a>";
+			data.message.player_2 = "you win! <a id='again' href='../../'>play again?</a>";
 		}
 		else if (data.board["4,4"].player === 1) {
 			data.state.playing = false;
@@ -358,8 +358,8 @@
 			data.selected.player_2 = null;
 			data.jumps.player_1 = null;
 			data.jumps.player_2 = null;
-			data.message.player_2 = "you lose!";
-			data.message.player_1 = "you win!";
+			data.message.player_1 = "you win! <a id='again' href='../../'>play again?</a>";
+			data.message.player_2 = "you lose! <a id='again' href='../../'>play again?</a>";
 		}
 
 		return data;

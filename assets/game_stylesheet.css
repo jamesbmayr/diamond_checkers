@@ -11,10 +11,37 @@
 /* page */
 	body {
 		background-color: #222222;
-		font-size: 25px;
+		font-size: 4vh;
 		font-family: arial, sans-serif;
 		font-weight: bold;
 		color: var(--white);
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	#message {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		margin: 10px;
+		font-size: 4vh;
+		font-family: arial, sans-serif;
+		font-weight: bold;
+		color: var(--white);
+	}
+
+	#newgame_id {
+		display: inline-block;
+	}
+
+	#again {
+		color: var(--blue);
+		text-decoration: none;
+	}
+
+	#again:hover {
+		text-decoration: underline;
 	}
 
 /* game board */
@@ -22,8 +49,10 @@
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		height: 500px;
-		width: 500px;
+		height: 65vw;
+		width: 65vw;
+		max-height: 65vh;
+		max-width: 65vh;
 		border: 10px solid var(--black);
 		transform: translateX(-50%) translateY(-50%) rotate(45deg);
 		border-radius: 10px;
