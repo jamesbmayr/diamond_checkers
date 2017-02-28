@@ -29,6 +29,7 @@
 		font-family: arial, sans-serif;
 		font-weight: bold;
 		color: var(--white);
+		max-width: 45vw;
 	}
 
 /* form */

@@ -29,7 +29,11 @@
 					player_1: null,
 					player_2: null
 				},
-				jumps: {
+				legal: {
+					player_1: null,
+					player_2: null
+				},
+				highlighted: {
 					player_1: null,
 					player_2: null
 				},
@@ -116,8 +120,8 @@
 			
 			for (var x = 0; x < 5; x++) {
 				if (data.board[x + "," + y].player > 0) {
-					if ((data.state.last_piece.x === x) && (data.state.last_piece.y === y)) {
-						var last = " last";
+					if ((Number(data.state.last_piece.x) === x) && (Number(data.state.last_piece.y) === y)) {
+						var last = " highlighted";
 					}
 					else {
 						var last = "";
@@ -150,15 +154,15 @@
 			return data;
 		}
 		else if (data.board[piece.x + "," + piece.y].player !== player) { //opponent piece
-			data.message["player_" + actor] = "illegal move: not your piece";
+			data.message["player_" + player] = "illegal move: not your piece";
 			return data;
 		}
 		else if (data.board[target.x + "," + target.y].player) { //occupied square
-			data.message["player_" + actor] = "illegal move: occupied square";
+			data.message["player_" + player] = "illegal move: occupied square";
 			return data;
 		}
 		else if (((Number(target.x) === 0) && (Number(target.y) === 0) && (player === 1)) || ((Number(target.x) === 4) && (Number(target.y) === 4) && (player === 2))) { //home square
-			data.message["player_" + actor] = "illegal move: can't go into home square";
+			data.message["player_" + player] = "illegal move: can't go into home square";
 			return data;
 		}
 		else {
@@ -171,7 +175,7 @@
 				case ((Number(target.x) === Number(piece.x)) && (Number(target.y) === Number(piece.y) + 1)):
 				case ((Number(target.x) === Number(piece.x)) && (Number(target.y) === Number(piece.y) - 1)):
 					if (jumps.length) {
-						data.message["player_" + actor] = "illegal move: jumps available to make";
+						data.message["player_" + player] = "illegal move: jumps available to make";
 						return data;
 					}
 					else {
@@ -183,14 +187,27 @@
 							x: target.x,
 							y: target.y
 						}
+						
 						data.selected["player_" + player] = null;
-						data.jumps["player_" + player] = null;
+						data.legal["player_" + player] = null;
 						if (data.state.turn === 1) {
 							data.state.round++;
 						}
 
-						data.message["player_" + actor] = "piece moved to adjacent square - waiting...";
-						data.message["player_" + opponent] = "your turn!";
+						data.highlighted["player_" + player] = [{piece: {x: target.x, y: target.y}}];
+						data.message["player_" + player] = "piece moved to adjacent square - waiting...";
+						
+						opponent_jumps = findJumps(data, opponent, findPieces(data, opponent));
+						if (opponent_jumps.length) {
+							opponent_jumps.push({piece:{x: target.x, y: target.y}});
+							data.highlighted["player_" + opponent] = opponent_jumps;
+							data.message["player_" + opponent] = "your turn! jumps available...";
+						}
+						else {
+							data.highlighted["player_" + opponent] = [{piece: {x: target.x, y: target.y}}];
+							data.message["player_" + opponent] = "your turn!";
+						}
+						
 						data = checkEnd(data);
 						return data;
 					}
@@ -206,7 +223,7 @@
 						between.y = (Number(target.y) + Number(piece.y)) / 2;
 					
 					if (data.board[between.x + "," + between.y].player !== opponent) {
-						data.message["player_" + actor] = "illegal move: jump is not over opponent";
+						data.message["player_" + player] = "illegal move: jump is not over opponent";
 						return data;
 					}
 					else {
@@ -217,12 +234,21 @@
 						var jumps = findJumps(data, player, [{x: target.x, y: target.y}]);
 
 						if (jumps.length) {
+							data.state.last_piece = {
+								x: target.x,
+								y: target.y
+							};
+
 							data.selected["player_" + player] = {
 								x: target.x,
 								y: target.y
 							};
-							data.jumps["player_" + player] = jumps;
-							data.message["player_" + actor] = "piece jumped over opponent - keep jumping";
+							data.legal["player_" + player] = jumps;
+
+							data.highlighted["player_" + player] = [{piece: {x: target.x, y: target.y}}];
+							data.highlighted["player_" + opponent] = [{piece:{x: target.x, y: target.y}}];
+
+							data.message["player_" + player] = "piece jumped over opponent - keep jumping";
 							data.message["player_" + opponent] = "opponent is jump-chaining - waiting...";
 						}
 						else {
@@ -233,12 +259,23 @@
 								y: target.y
 							}
 							data.selected["player_" + player] = null;
-							data.jumps["player_" + player] = null;
+							data.legal["player_" + player] = null;
 							if (data.state.turn === 1) {
 								data.state.round++;
 							}
-							data.message["player_" + actor] = "piece jumped over opponent - waiting...";
-							data.message["player_" + opponent] = "your turn!";
+
+							data.highlighted["player_" + player] = [{piece: {x: target.x, y: target.y}}];
+							data.message["player_" + player] = "piece jumped over opponent - waiting...";
+
+							opponent_jumps = findJumps(data, opponent, findPieces(data, opponent));
+							if (opponent_jumps.length) {
+								opponent_jumps.push({piece:{x: target.x, y: target.y}});
+								data.highlighted["player_" + opponent] = opponent_jumps;
+								data.message["player_" + opponent] = "your turn! jumps available...";
+							}
+							else {
+								data.message["player_" + opponent] = "your turn!";
+							}
 						}
 
 						data = checkEnd(data);
@@ -248,7 +285,7 @@
 
 				//all other moves
 				default:
-					data.message["player_" + actor] = "illegal move: unknown";
+					data.message["player_" + player] = "illegal move: unknown";
 					return data;
 				break;
 			}
@@ -323,8 +360,11 @@
 
 			data.selected.player_1 = null;
 			data.selected.player_2 = null;
-			data.jumps.player_1 = null;
-			data.jumps.player_2 = null;
+			data.legal.player_1 = null;
+			data.legal.player_2 = null;
+			data.highlighted.player_1 = null;
+			data.highlighted.player_2 = null;			
+
 			data.message.player_1 = "you lose! <a id='again' href='../../'>play again?</a>";
 			data.message.player_2 = "you win! <a id='again' href='../../'>play again?</a>";
 		}
@@ -335,8 +375,11 @@
 			
 			data.selected.player_1 = null;
 			data.selected.player_2 = null;
-			data.jumps.player_1 = null;
-			data.jumps.player_2 = null;
+			data.legal.player_1 = null;
+			data.legal.player_2 = null;
+			data.highlighted.player_1 = null;
+			data.highlighted.player_2 = null;
+
 			data.message.player_1 = "you win! <a id='again' href='../../'>play again?</a>";
 			data.message.player_2 = "you lose! <a id='again' href='../../'>play again?</a>";
 		}
@@ -347,8 +390,11 @@
 
 			data.selected.player_1 = null;
 			data.selected.player_2 = null;
-			data.jumps.player_1 = null;
-			data.jumps.player_2 = null;
+			data.legal.player_1 = null;
+			data.legal.player_2 = null;
+			data.highlighted.player_1 = null;
+			data.highlighted.player_2 = null;
+
 			data.message.player_1 = "you lose! <a id='again' href='../../'>play again?</a>";
 			data.message.player_2 = "you win! <a id='again' href='../../'>play again?</a>";
 		}
@@ -359,8 +405,11 @@
 
 			data.selected.player_1 = null;
 			data.selected.player_2 = null;
-			data.jumps.player_1 = null;
-			data.jumps.player_2 = null;
+			data.legal.player_1 = null;
+			data.legal.player_2 = null;
+			data.highlighted.player_1 = null;
+			data.highlighted.player_2 = null;
+
 			data.message.player_1 = "you win! <a id='again' href='../../'>play again?</a>";
 			data.message.player_2 = "you lose! <a id='again' href='../../'>play again?</a>";
 		}

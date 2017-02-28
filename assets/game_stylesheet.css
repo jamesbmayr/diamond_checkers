@@ -29,6 +29,7 @@
 		font-family: arial, sans-serif;
 		font-weight: bold;
 		color: var(--white);
+		max-width: 45vw;
 	}
 
 	#newgame_id {
@@ -131,10 +132,12 @@
 
 	.selected[player=player_1] {
 		border: 5px solid var(--dark-blue);
+		box-shadow: 0px 0px 10px var(--blue);
 	}
 
 	.selected[player=player_2] {
 		border: 5px solid var(--dark-red);
+		box-shadow: 0px 0px 10px var(--red);
 	}
 
 	.legal[player=player_1] {
@@ -145,4 +148,12 @@
 	.legal[player=player_2] {
 		border: 5px solid var(--dark-red);
 		cursor: pointer;
+	}
+
+	.highlighted[player=player_1] {
+		box-shadow: 0px 0px 20px var(--blue);
+	}
+
+	.highlighted[player=player_2] {
+		box-shadow: 0px 0px 20px var(--red);
 	}

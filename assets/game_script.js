@@ -101,24 +101,7 @@ $(document).ready(function () {
 				url: "/ajax",
 				data: data,
 				success: function(data) {
-					if (typeof data.state.victor !== "undefined") {
-						clearInterval(loop);
-					}
-
-					$("#message").html(data.message["player_" + player] || "");
-					$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
-					turn = Number($("#board").attr("turn"));
-					
-					if (data.selected["player_" + player] !== null) {
-						$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
-
-						for (i = 0; i < data.jumps["player_" + player].length; i++) {
-							$("#square_" + data.jumps["player_" + player][i].target.x + "_" + data.jumps["player_" + player][i].target.y).addClass("legal").attr("player","player_" + player);
-						}
-					}
-					else {
-						$(".piece[player=player_" + player + "]").addClass("selectable");
-					}
+					alterBoard(data);
 				}
 			});
 		}
@@ -131,24 +114,7 @@ $(document).ready(function () {
 				data: {game_id: game_id},
 				success: function(data) {
 					if (Number($("#board").attr("turn")) !== data.state.turn) {
-						if (typeof data.state.victor !== "undefined") {
-							clearInterval(loop);
-						}
-						
-						$("#message").html(data.message["player_" + player] || "");
-						$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
-						turn = Number($("#board").attr("turn"));
-
-						if ((typeof data.selected["player_" + player] !== "undefined") && (data.selected["player_" + player] !== null)) {
-							$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
-
-							for (i = 0; i < data.jumps["player_" + player].length; i++) {
-								$("#square_" + data.jumps["player_" + player][i].target.x + "_" + data.jumps["player_" + player][i].target.y).addClass("legal").attr("player","player_" + player);
-							}
-						}
-						else {
-							$(".piece[player=player_" + player + "]").addClass("selectable");
-						}
+						alterBoard(data);
 					}
 				}
 			});
@@ -185,5 +151,34 @@ $(document).ready(function () {
 			}
 
 			return board;
+		}
+
+	/* alterBoard */
+		function alterBoard(data) {
+			if (typeof data.state.victor !== "undefined") {
+				clearInterval(loop);
+			}
+
+			$("#message").html(data.message["player_" + player] || "");
+			$("#board").attr("turn", data.state.turn).attr("round", data.state.round).empty().append(drawBoard(data));
+			turn = data.state.turn;
+
+			if ((typeof data.selected["player_" + player] !== "undefined") && (data.selected["player_" + player] !== null)) {
+				$("#square_" + data.selected["player_" + player].x + "_" + data.selected["player_" + player].y).find(".piece").addClass("selected");
+	
+				for (i = 0; i < data.legal["player_" + player].length; i++) {
+					$("#square_" + data.legal["player_" + player][i].target.x + "_" + data.legal["player_" + player][i].target.y).addClass("legal").attr("player","player_" + player);
+				}
+			}
+			else {
+				$(".piece[player=player_" + player + "]").addClass("selectable");
+			}
+
+			if ((typeof data.highlighted["player_" + player] !== "undefined") && (data.highlighted["player_" + player] !== null)) {
+				for (i = 0; i < data.highlighted["player_" + player].length; i++) {
+					$("#square_" + data.highlighted["player_" + player][i].piece.x + "_" + data.highlighted["player_" + player][i].piece.y).find(".piece").addClass("highlighted");
+				}
+			}
+
 		}
 });
