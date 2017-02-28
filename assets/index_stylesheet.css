@@ -182,4 +182,5 @@
 		text-align: center;
 		color: var(--dark-red);
 		outline:none;
+		text-transform: uppercase;
 	}

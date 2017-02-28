@@ -100,7 +100,7 @@
 
 					case (/^\/$/).test(request.url): //index page
 						console.log(JSON.stringify(post));
-						if ((typeof post.start !== "undefined") && ((typeof post.game_id === "undefined") || (post.game_id.length === 0))) {
+						if ((typeof post.start !== "undefined") && ((typeof post.game_id === "undefined") || (post.game_id.length === 0))) { //start game
 							console.log("starting game...");
 							var data = game.newGame("player_1");
 							processes.store("games", null, data, then);
@@ -115,9 +115,9 @@
 								}
 							};
 						}
-						else if ((typeof post.start !== "undefined") && (typeof post.game_id !== "undefined") && (post.game_id.length > 0)) {
+						else if ((typeof post.start !== "undefined") && (typeof post.game_id !== "undefined") && (post.game_id.length > 0)) {  //join game
 							console.log("joining game...");
-							processes.retrieve("games", {id: post.game_id}, then_1);
+							processes.retrieve("games", {id: String(post.game_id).toUpperCase()}, then_1);
 							function then_1(data) {
 								var data = game.joinGame(data,"player_2");
 								if (data.id === false) {
@@ -146,12 +146,12 @@
 						}
 					break;
 
-					case ((/^\/[A-Za-z0-9]{16}\//).test(request.url) && ((typeof routes[2] === "undefined") || (!(/^(0|1|2)$/).test(routes[2])))): //game page without viewer
+					case ((/^\/[A-Za-z0-9]{4}\//).test(request.url) && ((typeof routes[2] === "undefined") || (!(/^(0|1|2)$/).test(routes[2])))): //game page without viewer
 						response.writeHead(302, {Location: "../../../../" + routes[1] + "/0"});
 						response.end();
 					break;
 
-					case (/^\/[A-Za-z0-9]{16}\/(0|1|2)$/).test(request.url): //games pages
+					case (/^\/[A-Za-z0-9]{4}\/(0|1|2)$/).test(request.url): //games pages
 						var game_id = routes[1];
 						processes.retrieve("games", {id: game_id}, then);
 						function then(data) {
@@ -169,11 +169,11 @@
 					break;
 
 					case (/\/ajax$/).test(request.url) && (request.method === "POST"): //ajax requests
-						processes.retrieve("games", {id: post.game_id}, then_1);
+						processes.retrieve("games", {id: String(post.game_id).toUpperCase()}, then_1);
 						function then_1(data) {
 							if ((data) && (typeof post.player !== "undefined")) {
 								data = game.makeMove(data, post.player, {x: post["piece[x]"], y: post["piece[y]"]}, {x: post["target[x]"], y: post["target[y]"]});
-								processes.store("games", {id: post.game_id}, data, then_2);
+								processes.store("games", {id: String(post.game_id).toUpperCase()}, data, then_2);
 							}
 							else {
 								then_2(data);

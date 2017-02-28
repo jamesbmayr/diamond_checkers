@@ -5,7 +5,7 @@
 	function newGame(player_1) {
 		try {
 			var data = {
-				id: processes.randomString(16),
+				id: processes.randomString(4),
 				players: {
 					player_1: player_1,
 					player_2: null
