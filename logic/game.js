@@ -274,6 +274,7 @@
 								data.message["player_" + opponent] = "your turn! jumps available...";
 							}
 							else {
+								data.highlighted["player_" + opponent] = [{piece: {x: target.x, y: target.y}}];
 								data.message["player_" + opponent] = "your turn!";
 							}
 						}
