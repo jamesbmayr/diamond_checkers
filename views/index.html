@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Diamond Checkers</title>
@@ -9,12 +10,19 @@
 	<body>
 		<div id="message"><% data.message %></div>
 		<form id="game_form" method="post" action="">
-			<div id="game_form_inner">
+			<div id="title">diamond<span id="title_spacer"></span>checkers</div>
+			<button id="start" type="submit" name="start"><div id="start_inner">start</div></button>
+			<div id="join"><div id="join_inner">join</div></div>
+			<div id="join_2"><input id="game_id" type="text" name="game_id" placeholder="game_id"/></div>
+		</form>
+		<div id="diamond"></div>
+		<!-- <form id="game_form">
+			<div id="game_form_inner" method="post" action="">
 				<div id="title">diamond<span id="title_spacer"></span>checkers</div>
 				<button id="start" type="submit" name="start"><div id="start_inner">start</div></button>
 				<div id="join"><div id="join_inner">join</div></div>
 				<div id="join_2"><input id="game_id" type="text" name="game_id" placeholder="game_id"/></div>
-			</div>			
-		</form>
+			</div>
+		</form> -->
 	</body>
 </html>
