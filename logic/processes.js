@@ -37,7 +37,7 @@
 
 /* random string */
 	function randomString(length) {
-		var set = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var set = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		var output = "";
 
 		for (i = 0; i < length; i++) {
