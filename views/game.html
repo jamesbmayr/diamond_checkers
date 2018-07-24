@@ -11,5 +11,6 @@
 	<body>
 		<div id="message"><% data.message["player_" + data.viewer] %></div>
 		<div id="board" game-id="<% data.id %>" turn="<% data.state.turn %>" round="<% data.state.round %>" player="<% data.viewer %>"><% game.drawBoard(data) %></div>
+		<a id="j-logo" href="https://jamesmayr.com" target="_blank"></a>
 	</body>
 </html>

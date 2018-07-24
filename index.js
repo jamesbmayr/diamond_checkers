@@ -50,6 +50,18 @@
 						});
 					break;
 
+					case (/\/j[.]png$/).test(request.url): //j-logo
+						fs.readFile(__dirname + "/assets/j.png", function (error, image) {
+							if (error) {
+								console.log(error);
+							}
+							else {
+								response.writeHead(200, {"Content-Type": "image/png"});
+								response.end(image)
+							}
+						});
+					break
+
 					case (/\/index_stylesheet.css$/).test(request.url): //index stylesheet
 						fs.readFile(__dirname + "/assets/index_stylesheet.css", function (error, css) {
 							if (error) {
