@@ -5,14 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"test\"",
-    "start": "node index.js",
-    "mongo": "mongod --dbpath=data/db --port 27017"
+    "start": "node index.js"
   },
   "author": "James Mayr",
-  "license": "ISC",
-  "dependencies": {
-    "mongodb": "^2.2.24"
-  }, 
+  "license": "ISC", 
   "engines": {
     "node": "6.11.1"
   }

@@ -1,14 +1,9 @@
 /* dependencies */
 	const fs = require("fs");
-	const mongo = require("mongodb").MongoClient;
-	var database;
-	if (typeof process.env.MLABS_URL !== "undefined") {
-		database = "mongodb://" + process.env.MLABS_USERNAME + ":" + process.env.MLABS_PASSWORD + "@" + process.env.MLABS_URL;
-	}
-	else {
-		database = "mongodb://localhost:27017/diamond_checkers";
-	}
 	const game = require("./game");
+	const db = {
+		games: {}
+	}
 
 /* render html */
 	function render(file, data) {
@@ -49,64 +44,47 @@
 
 /* store data */
 	function store(table, search, data, callback) {
-		mongo.connect(database, function(error, db) {
-			if (error) {
-				console.log(error);
-			}			
-			else {			
-				if ((search === null) && (data !== null)) { //create
-					db.collection(table).insert(data, function (error, result) {
-						if (error) {
-							console.log(error);
-						}
-						else {
-							callback(result.ops[0]);
-						}
-					});
-				}
-				else if ((search !== null) && (data !== null)) { //update
-					db.collection(table).update(search, data, function (error, result) {
-						if (error) {
-							console.log(error);
-						}
-						else {
-							callback(data);
-						}
-					});
-				}
-				else if ((search !== null) && (data === null)) { //remove
-					db.collection(table).remove(search, function (error, result) {
-						if (error) {
-							console.log(error);
-						}
-						else {
-							callback(result);
-						}
-					});
-				}
+		if ((search === null) && (data !== null)) { //create
+			if (!data.id) {
+				data.id = randomString(4)
 			}
-			db.close();
-		});
+
+			db[table][data.id] = data
+			callback(data)
+		}
+		else if ((search !== null) && (data !== null)) { //update
+			if (search.id) {
+				db[table][search.id] = data
+				callback(data)
+			}
+			else {
+				callback(false)
+			}
+		}
+		else if ((search !== null) && (data === null)) { //remove
+			if (search.id && data[table][search.id]) {
+				delete data[table][search.id]
+				callback(true)
+			}
+			else {
+				callback(false)
+			}
+		}
 	}
 
 /* retrieve data */
 	function retrieve(table, search, callback) {
-		mongo.connect(database, function(error, db) {
-			if (error) {
-				console.log(error);
+		if (search.id) {
+			if (db[table][search.id]) {
+				callback(db[table][search.id])
 			}
-			else {	
-				db.collection(table).findOne(search, function (error, result) {
-					if (error) {
-						console.log(error);
-					}
-					else {
-						callback(result);
-					}
-				});
+			else {
+				callback(null)
 			}
-			db.close();
-		});
+		}
+		else {
+			callback(null)
+		}
 	}
 
 /* exports */
