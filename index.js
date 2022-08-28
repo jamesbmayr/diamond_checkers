@@ -38,6 +38,11 @@
 				var routes = String(request.url).split("/");
 
 				switch (true) {
+					case (/^\/ping\/?$/).test(request.url):
+						response.writeHead(200, {"Content-Type": "text/json"})
+						response.end( JSON.stringify({success: true, timestamp: new Date().getTime()}) )
+					break
+
 					case (/\/icon.png$/).test(request.url): //icon
 						fs.readFile(__dirname + "/assets/icon.png", function (error, image) {
 							if (error) {
